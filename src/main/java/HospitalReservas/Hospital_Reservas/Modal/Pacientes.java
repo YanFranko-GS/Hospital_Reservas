@@ -1,7 +1,9 @@
 package HospitalReservas.Hospital_Reservas.Modal;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +18,10 @@ import lombok.Setter;
 
 
 @Table(name = "pacientes")
+@Entity
 public class Pacientes {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_paciente;
     
@@ -33,3 +37,4 @@ public class Pacientes {
     //esto es el id tiene que jalar el historial por el momento no tendra una funcion NO OLVIDAR
     private Long historial_medico;
 }
+

@@ -54,10 +54,11 @@ public class PacientesController {
     // elimina ps
     @DeleteMapping("/{id_paciente}")
     public ResponseEntity<Void> eliminarPacientes(@PathVariable Long id_paciente) {
-        if (pacientesService.eliminarPacientes(id_paciente)) {
+        if (pacientesService.deletePacientes(id_paciente)) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 }
+
