@@ -2,6 +2,8 @@ package HospitalReservas.Hospital_Reservas.Controller;
 
 import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
 import HospitalReservas.Hospital_Reservas.Service.PacientesService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +14,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/pacientes")
 public class PacientesController {
+    @Autowired
+    private PacientesService pacientesService;
 
-    private final PacientesService pacientesService;
-
-    public PacientesController(PacientesService pacientesService) {
-        this.pacientesService = pacientesService;
-    }
-
+   
     // GET: Listar todos los pacientes
     @GetMapping
     public ResponseEntity<List<Pacientes>> listarPacientes() {
@@ -33,11 +32,12 @@ public class PacientesController {
     }
 
     // POST: Crear nuevo paciente
+
     @PostMapping
     public ResponseEntity<Pacientes> crearPacientes(@RequestBody Pacientes paciente) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(pacientesService.savePacientes(paciente));
+        Pacientes nuevoPaciente = pacientesService.savePacientes(paciente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPaciente);
     }
-
     // PUT: Actualizar paciente existente
     @PutMapping("/{id_paciente}")
     public ResponseEntity<Pacientes> actualizarPacientes(

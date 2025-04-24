@@ -1,7 +1,9 @@
 package HospitalReservas.Hospital_Reservas.Modal;
 
-import java.time.LocalDateTime;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,22 +12,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-
-
-@Table (name = "usuarios")  
+@NoArgsConstructor
+@Entity
+@Table(name = "usuarios")
 public class Usuarios {
-//MediFast
 
-    private Long id_usuario;
-    private String nombre_usuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idUsuario;
+
+    private String nombreUsuario;
     private String contraseña;
-    private String correo_electronico;
-    // falta meter el rol solo tendra la funcion del admin y el medico mas adelante se implementara
-    //rol
-    private LocalDateTime ultimo_inico_sesion;
-
+    private String correoElectronico;
+    private String rol;
+    private String ultimoInicioSesion;
 
 }
-

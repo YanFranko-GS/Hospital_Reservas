@@ -1,5 +1,9 @@
 package HospitalReservas.Hospital_Reservas.Modal;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,17 +14,20 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Entity
 @Table(name = "medicos")
 public class Medicos {
-    
-    private Long id_medico;
-    private String nombre_completo;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idMedico;
+
+    private String nombreCompleto;
     private String especialidad;
-    private String numero_colegiado;
-    private String horario_laboral;
-    private String consultario;
-    private int telefono;
-    private String correo_electronico;
-    
+    private String numeroColegiado;
+    private String horarioLaboral;
+    private String consultorio;
+    private String telefono;
+    private String correoElectronico;
+
 }

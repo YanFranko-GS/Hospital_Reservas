@@ -15,15 +15,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "pagos")
-public class Pagos {
+@Table(name = "historial_medicos")
+public class HistorialMedicos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPago;
+    private Long idHistorial;
 
-    private double montoTotal;
-    private String metodoPago;
-    private String fechaPago;
-    private String estadoPago;
+    private String diagnostico;
+    private String prescripcion;
+    private String fechaRegistro;
+    private String progreso;
+
 }

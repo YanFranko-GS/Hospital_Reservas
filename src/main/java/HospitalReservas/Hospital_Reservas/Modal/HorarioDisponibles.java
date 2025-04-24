@@ -15,15 +15,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "pagos")
-public class Pagos {
+@Table(name = "horarios_disponibles")
+public class HorarioDisponibles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPago;
+    private Long idHorario;
 
-    private double montoTotal;
-    private String metodoPago;
-    private String fechaPago;
-    private String estadoPago;
+    private String fechaDisponibilidad;
+    private String horaInicio;
+    private String horaFin;
+    private String estado;
 }

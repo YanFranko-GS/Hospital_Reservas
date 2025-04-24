@@ -1,39 +1,30 @@
 package HospitalReservas.Hospital_Reservas.Modal;
 
-import java.time.LocalDateTime;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-
+@NoArgsConstructor
+@Entity
 @Table(name = "citas")
 public class Citas {
 
-    
-    private Long id_cita;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idCita;
 
-    //esto tiene que jalar el id del paciente , medico y el servicio "Falta especificar Corregir esto"
-    //No olvidar
-    private Long id_paciente;
-    private Long id_medico;
-    //  
-
-    private LocalDateTime fecha_hora;
+    private String fechaHora;
     private String motivo;
-    
-    //esto tiene que ir en una lista en donde el estado de la cita esta en proceso o en espera "arreglar mas tarde"
-    //No olvidar 
-    private String estado =("Pendiente, Confirmada, Cancelada, Completada"); 
+    private String estado;
     private String observaciones;
 
-    //esto tiene que jalar el id del servicio "Falta especificar Corregir esto"
-    private Long id_servicio;
 }

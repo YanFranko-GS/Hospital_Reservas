@@ -14,8 +14,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "pacientes")
 @Entity
+@Table(name = "pacientes")
 public class Pacientes {
 
     @Id
@@ -31,5 +31,5 @@ public class Pacientes {
     private String tipoDocumento;
     private String numeroDocumento;
 
-    private Long historialMedico;
+    
 }
