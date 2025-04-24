@@ -1,20 +1,17 @@
 package HospitalReservas.Hospital_Reservas.Repository;
 
+import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
+import java.util.Optional;
 
 @Repository
 public interface PacientesRepository extends JpaRepository<Pacientes, Long> {
-    
-    Pacientes findByid_paciente(Long id_paciente);
-    Pacientes findBycorreo_electronico(String correo_electronico);
-    Pacientes findBytelefono(int telefono);
-    Pacientes findBynumero_documento(String numero_documento);
 
-    //esto es el id tiene que jalar el historial por el momento no tendra una funcion NO OLVIDAR
-    Pacientes findByhistorial_medico(Long historial_medico);
-
-
+    Optional<Pacientes> findByIdPaciente(Long idPaciente);
+    Optional<Pacientes> findByCorreoElectronico(String correoElectronico);
+    Optional<Pacientes> findByTelefono(int telefono);
+    Optional<Pacientes> findByNumeroDocumento(String numeroDocumento);
+    Optional<Pacientes> findByHistorialMedico(Long historialMedico);
 }

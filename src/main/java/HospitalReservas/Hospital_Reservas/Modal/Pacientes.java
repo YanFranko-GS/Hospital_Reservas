@@ -14,27 +14,22 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-
-
 @Table(name = "pacientes")
 @Entity
 public class Pacientes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_paciente;
-    
-    private String nombre_completo;
-    private String fecha_nacimiento;
-    private String correo_electronico;
+    private Long idPaciente;
+
+    private String nombreCompleto;
+    private String fechaNacimiento;
+    private String correoElectronico;
     private int telefono;
     private String direccion;
     private String sexo;
-    private String Tipo_documento;
-    private String numero_documento;
+    private String tipoDocumento;
+    private String numeroDocumento;
 
-    //esto es el id tiene que jalar el historial por el momento no tendra una funcion NO OLVIDAR
-    private Long historial_medico;
+    private Long historialMedico;
 }
-

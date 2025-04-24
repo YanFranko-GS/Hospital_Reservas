@@ -1,87 +1,64 @@
 package HospitalReservas.Hospital_Reservas.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
+import HospitalReservas.Hospital_Reservas.Repository.PacientesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
-import HospitalReservas.Hospital_Reservas.Repository.PacientesRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class PacientesService {   
+public class PacientesService {
+
     @Autowired
     private PacientesRepository pacientesRepository;
 
-    public Pacientes findByid_paciente(Long id_paciente) {
-        return pacientesRepository.findByid_paciente(id_paciente);
+    public Optional<Pacientes> findByIdPaciente(Long idPaciente) {
+        return pacientesRepository.findByIdPaciente(idPaciente);
     }
 
-    public Pacientes findBycorreo_electronico(String correo_electronico) {
-        return pacientesRepository.findBycorreo_electronico(correo_electronico);
+    public Optional<Pacientes> findByCorreoElectronico(String correoElectronico) {
+        return pacientesRepository.findByCorreoElectronico(correoElectronico);
     }
 
-    public Pacientes findBytelefono(int telefono) {
-        return pacientesRepository.findBytelefono(telefono);
+    public Optional<Pacientes> findByTelefono(int telefono) {
+        return pacientesRepository.findByTelefono(telefono);
     }
 
-    public Pacientes findBynumero_documento(String numero_documento) {
-        return pacientesRepository.findBynumero_documento(numero_documento);
+    public Optional<Pacientes> findByNumeroDocumento(String numeroDocumento) {
+        return pacientesRepository.findByNumeroDocumento(numeroDocumento);
     }
 
-    // Esto está para corregir por el momento, aún no se necesita
-    // public Pacientes findByhistorial_medico(Long historial_medico) {
-    //     return pacientesRepository.findByhistorial_medico(historial_medico);
-    // }
-
-
-    
-    // Funciones CRUD
-
-    // Guardar un paciente
     public Pacientes savePacientes(Pacientes paciente) {
         return pacientesRepository.save(paciente);
     }
 
-    // Obtener ID de los pacientes
-    public Optional<Pacientes> obtenerPacientesPorId(Long id_paciente) {
-        return pacientesRepository.findById(id_paciente);
+    public Optional<Pacientes> obtenerPacientesPorId(Long idPaciente) {
+        return pacientesRepository.findById(idPaciente);
     }
 
-    // Crear nuevo paciente (NO funciona)
-
-    //public Pacientes crearPacientes(Pacientes paciente) {
-    //    return pacientesRepository.save(paciente); 
-    //}
-
-
-    //listar a todos los pacientes
     public List<Pacientes> listarPacientes() {
-        return pacientesRepository.findAll(); 
+        return pacientesRepository.findAll();
     }
 
-
-    // Actualizar un paciente
-    public Optional<Pacientes> actualizarPacientes(Long id_paciente, Pacientes pacienteActualizado) {
-        return pacientesRepository.findById(id_paciente).map(pacientes -> {            
-            pacientes.setNombre_completo(pacienteActualizado.getNombre_completo());
-            pacientes.setFecha_nacimiento(pacienteActualizado.getFecha_nacimiento());
-            pacientes.setCorreo_electronico(pacienteActualizado.getCorreo_electronico());
-            pacientes.setTelefono(pacienteActualizado.getTelefono());
-            pacientes.setDireccion(pacienteActualizado.getDireccion());
-            pacientes.setSexo(pacienteActualizado.getSexo());
-            pacientes.setTipo_documento(pacienteActualizado.getTipo_documento());
-            pacientes.setNumero_documento(pacienteActualizado.getNumero_documento());
-            return pacientesRepository.save(pacientes); 
+    public Optional<Pacientes> actualizarPacientes(Long idPaciente, Pacientes actualizado) {
+        return pacientesRepository.findById(idPaciente).map(p -> {
+            p.setNombreCompleto(actualizado.getNombreCompleto());
+            p.setFechaNacimiento(actualizado.getFechaNacimiento());
+            p.setCorreoElectronico(actualizado.getCorreoElectronico());
+            p.setTelefono(actualizado.getTelefono());
+            p.setDireccion(actualizado.getDireccion());
+            p.setSexo(actualizado.getSexo());
+            p.setTipoDocumento(actualizado.getTipoDocumento());
+            p.setNumeroDocumento(actualizado.getNumeroDocumento());
+            return pacientesRepository.save(p);
         });
     }
 
-    // eliminarar un paciente por si id pero pasara por un booleano
-    // para saber si se elimino o no
-    public boolean deletePacientes(Long id_paciente) {
-        if (pacientesRepository.existsById(id_paciente)) { 
-            pacientesRepository.deleteById(id_paciente); 
+    public boolean deletePacientes(Long idPaciente) {
+        if (pacientesRepository.existsById(idPaciente)) {
+            pacientesRepository.deleteById(idPaciente);
             return true;
         }
         return false;

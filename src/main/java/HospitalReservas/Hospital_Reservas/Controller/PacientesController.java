@@ -1,57 +1,54 @@
 package HospitalReservas.Hospital_Reservas.Controller;
 
+import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
 import HospitalReservas.Hospital_Reservas.Service.PacientesService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import HospitalReservas.Hospital_Reservas.Modal.Pacientes;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/pacientes")
 public class PacientesController {
 
-    private PacientesService pacientesService;
+    private final PacientesService pacientesService;
 
-    // Lista los pacientes
-    @GetMapping()
+    public PacientesController(PacientesService pacientesService) {
+        this.pacientesService = pacientesService;
+    }
+
+    // GET: Listar todos los pacientes
+    @GetMapping
     public ResponseEntity<List<Pacientes>> listarPacientes() {
         return ResponseEntity.ok(pacientesService.listarPacientes());
     }
 
-    // Busca paciente por ID
+    // GET: Buscar paciente por ID (usando ID interno de la entidad)
     @GetMapping("/{id_paciente}")
     public ResponseEntity<Pacientes> obtenerPacientesPorId(@PathVariable("id_paciente") Long idPaciente) {
         Optional<Pacientes> paciente = pacientesService.obtenerPacientesPorId(idPaciente);
         return paciente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crea un nuevo paciente
-    @PostMapping()
+    // POST: Crear nuevo paciente
+    @PostMapping
     public ResponseEntity<Pacientes> crearPacientes(@RequestBody Pacientes paciente) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pacientesService.savePacientes(paciente));
     }
 
-    // Actualiza un paciente existente
+    // PUT: Actualizar paciente existente
     @PutMapping("/{id_paciente}")
-    public ResponseEntity<Pacientes> actualizarPacientes(@PathVariable Long id_paciente,
+    public ResponseEntity<Pacientes> actualizarPacientes(
+            @PathVariable Long id_paciente,
             @RequestBody Pacientes pacienteActualizado) {
+
         Optional<Pacientes> paciente = pacientesService.actualizarPacientes(id_paciente, pacienteActualizado);
         return paciente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // elimina ps
+    // DELETE: Eliminar paciente
     @DeleteMapping("/{id_paciente}")
     public ResponseEntity<Void> eliminarPacientes(@PathVariable Long id_paciente) {
         if (pacientesService.deletePacientes(id_paciente)) {
@@ -60,5 +57,28 @@ public class PacientesController {
             return ResponseEntity.notFound().build();
         }
     }
-}
 
+    // GET: Buscar paciente por correo electrónico
+    @GetMapping("/buscar/correo")
+    public ResponseEntity<Pacientes> buscarPorCorreo(@RequestParam("correo") String correo) {
+        return pacientesService.findByCorreoElectronico(correo)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // GET: Buscar paciente por número de teléfono
+    @GetMapping("/buscar/telefono")
+    public ResponseEntity<Pacientes> buscarPorTelefono(@RequestParam("telefono") int telefono) {
+        return pacientesService.findByTelefono(telefono)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // GET: Buscar paciente por número de documento
+    @GetMapping("/buscar/documento")
+    public ResponseEntity<Pacientes> buscarPorDocumento(@RequestParam("documento") String numeroDocumento) {
+        return pacientesService.findByNumeroDocumento(numeroDocumento)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+}
