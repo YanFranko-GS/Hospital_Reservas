@@ -4,11 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,4 +34,7 @@ public class Medicos {
     private String telefono;
     private String correoElectronico;
 
+    // Relación con Citas (un medico puede tener muchas citas)
+    @OneToMany(mappedBy = "medico")
+    private List<Citas> citas;  // Relación inversa con Citas
 }

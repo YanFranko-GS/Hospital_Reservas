@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +28,9 @@ public class Notificaciones {
     private String fechaEnvio;
     private String medioEnvio;
     private String mensaje;
+
+    // Relación con Usuario (una notificación pertenece a un único usuario)
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)  // Clave foránea a Usuarios
+    private Usuarios usuario;
 }

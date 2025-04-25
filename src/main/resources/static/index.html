@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Reservas - Administración</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 p-6">
+
+    <div class="container mx-auto">
+
+        <h1 class="text-4xl font-bold text-center text-blue-800 mb-12">Hospital Reservas - Administración</h1>
+
+        <!-- Buscar Médico -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Buscar Médico</h2>
+            <input type="text" id="searchMedico" placeholder="Buscar por nombre"
+                class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+            <button onclick="searchMedicos()"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none">Buscar</button>
+        </div>
+
+        <!-- Formulario para Agregar Médico -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Agregar Médico</h2>
+            <form id="medicoForm">
+                <input type="text" id="nombreCompleto" placeholder="Nombre Completo"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="email" id="correoElectronico" placeholder="Correo Electrónico"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="text" id="especialidad" placeholder="Especialidad"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="text" id="numeroColegiado" placeholder="Número Colegiado"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="text" id="telefono" placeholder="Teléfono"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+                <input type="text" id="consultorio" placeholder="Consultorio (Opcional)"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+                <input type="text" id="horarioLaboral" placeholder="Horario Laboral"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <button type="submit"
+                    class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 focus:outline-none">Agregar
+                    Médico</button>
+            </form>
+        </div>
+
+        <!-- Lista de Médicos -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Lista de Médicos</h2>
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Nombre Completo</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Especialidad</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Número Colegiado</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Horario Laboral</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Correo Electrónico</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Teléfono</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Consultorio</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="medicosTable">
+                    <!-- Aquí se insertarán los médicos -->
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="my-8">
+
+        <!-- Formulario para Agregar Paciente -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Agregar Paciente</h2>
+            <form id="pacienteForm">
+                <input type="text" id="nombrePaciente" placeholder="Nombre Completo"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="email" id="correoPaciente" placeholder="Correo Electrónico"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="number" id="telefonoPaciente" placeholder="Teléfono"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="text" id="direccionPaciente" placeholder="Dirección"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <input type="date" id="fechaNacimientoPaciente"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+                <input type="text" id="numeroDocumento" placeholder="Número de Documento (DNI)"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    required />
+                <select id="sexoPaciente" required
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
+                    <option value="">Seleccione Sexo</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <input type="text" id="tipoDocumento" placeholder="Tipo de Documento (DNI, Pasaporte, etc.)"
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+                <button type="submit"
+                    class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 focus:outline-none">Agregar
+                    Paciente</button>
+            </form>
+        </div>
+
+        <!-- Lista de Pacientes -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Lista de Pacientes</h2>
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Nombre Completo</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Correo Electrónico</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Teléfono</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Dirección</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Fecha de Nacimiento</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Número de Documento</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Sexo</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Tipo de Documento</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="pacientesTable">
+                    <!-- Aquí se insertarán los pacientes -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:8080/api"; // URL de tu API
+
+        // ===============================
+        // FUNCIONES PARA LOS MÉDICOS
+        // ===============================
+
+        // Función para obtener todos los médicos y listarlos
+        function fetchMedicos(searchTerm = "") {
+            fetch(`${API_URL}/medicos?search=${searchTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#medicosTable');
+                    tableBody.innerHTML = ''; // Limpiar la tabla
+                    data.forEach(medico => {
+                        const row = document.createElement('tr');
+                        row.setAttribute('data-id', medico.idMedico);
+                        row.innerHTML = `
+                    <td class="px-6 py-4">${medico.nombreCompleto}</td>
+                    <td class="px-6 py-4">${medico.especialidad}</td>
+                    <td class="px-6 py-4">${medico.numeroColegiado}</td>
+                    <td class="px-6 py-4">${medico.horarioLaboral}</td>
+                    <td class="px-6 py-4">${medico.correoElectronico}</td>
+                    <td class="px-6 py-4">${medico.telefono}</td>
+                    <td class="px-6 py-4">${medico.consultorio || 'No asignado'}</td>
+                    <td class="px-6 py-4">
+                        <button onclick="editarMedico(${medico.idMedico})" class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600">Editar</button>
+                        <button onclick="eliminarMedico(${medico.idMedico})" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">Eliminar</button>
+                    </td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching médicos:', error));
+        }
+
+        // Función para agregar un nuevo médico
+        document.getElementById('medicoForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const medico = {
+                nombreCompleto: document.getElementById('nombreCompleto').value,
+                correoElectronico: document.getElementById('correoElectronico').value,
+                especialidad: document.getElementById('especialidad').value,
+                numeroColegiado: document.getElementById('numeroColegiado').value,
+                telefono: document.getElementById('telefono').value,
+                consultorio: document.getElementById('consultorio').value,
+                horarioLaboral: document.getElementById('horarioLaboral').value
+            };
+            fetch(`${API_URL}/medicos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(medico)
+            })
+                .then(response => response.json())
+                .then(() => {
+                    alert('Médico agregado correctamente');
+                    fetchMedicos();  // Actualizar lista de médicos
+                    document.getElementById('medicoForm').reset();  // Limpiar el formulario
+                })
+                .catch(error => console.error('Error al agregar médico:', error));
+        });
+
+        // Función para editar un médico
+        function editarMedico(idMedico) {
+            fetch(`${API_URL}/medicos/${idMedico}`)
+                .then(response => response.json())
+                .then(medico => {
+                    // Rellenar los campos del formulario con la información del médico
+                    document.getElementById('nombreCompleto').value = medico.nombreCompleto;
+                    document.getElementById('especialidad').value = medico.especialidad;
+                    document.getElementById('numeroColegiado').value = medico.numeroColegiado;
+                    document.getElementById('horarioLaboral').value = medico.horarioLaboral;
+                    document.getElementById('correoElectronico').value = medico.correoElectronico;
+                    document.getElementById('telefono').value = medico.telefono;
+                    document.getElementById('consultorio').value = medico.consultorio || '';  // Si no hay consultorio, dejarlo vacío
+
+                    // Cambiar la acción del formulario para actualizar
+                    const form = document.getElementById('medicoForm');
+                    form.onsubmit = function (event) {
+                        event.preventDefault();
+                        const medicoActualizado = {
+                            nombreCompleto: document.getElementById('nombreCompleto').value,
+                            especialidad: document.getElementById('especialidad').value,
+                            numeroColegiado: document.getElementById('numeroColegiado').value,
+                            horarioLaboral: document.getElementById('horarioLaboral').value,
+                            correoElectronico: document.getElementById('correoElectronico').value,
+                            telefono: document.getElementById('telefono').value,
+                            consultorio: document.getElementById('consultorio').value
+                        };
+
+                        fetch(`${API_URL}/medicos/${idMedico}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(medicoActualizado)
+                        })
+                            .then(response => response.json())
+                            .then(() => {
+                                alert('Médico actualizado correctamente');
+                                fetchMedicos();  // Actualizar lista de médicos
+                                form.reset();  // Limpiar el formulario
+                                form.onsubmit = null;  // Resetear la acción del formulario
+                            })
+                            .catch(error => console.error('Error al actualizar médico:', error));
+                    };
+                })
+                .catch(error => console.error('Error fetching médico:', error));
+        }
+
+        // Función para eliminar un médico
+        function eliminarMedico(idMedico) {
+            fetch(`${API_URL}/medicos/${idMedico}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Médico eliminado');
+                        fetchMedicos();  // Actualizar lista de médicos
+                    } else {
+                        alert('Error al eliminar médico');
+                    }
+                })
+                .catch(error => console.error('Error al eliminar médico:', error));
+        }
+
+        // ===============================
+        // FUNCIONES PARA LOS PACIENTES
+        // ===============================
+
+        // Función para obtener todos los pacientes y listarlos
+        function fetchPacientes() {
+            fetch(`${API_URL}/pacientes`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#pacientesTable');
+                    tableBody.innerHTML = ''; // Limpiar la tabla
+                    data.forEach(paciente => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                    <td class="px-6 py-4">${paciente.nombreCompleto}</td>
+                    <td class="px-6 py-4">${paciente.correoElectronico}</td>
+                    <td class="px-6 py-4">${paciente.telefono}</td>
+                    <td class="px-6 py-4">${paciente.direccion}</td>
+                    <td class="px-6 py-4">${paciente.fechaNacimiento}</td>
+                    <td class="px-6 py-4">${paciente.numeroDocumento}</td>
+                    <td class="px-6 py-4">${paciente.sexo}</td>
+                    <td class="px-6 py-4">${paciente.tipoDocumento}</td>
+                    <td class="px-6 py-4">
+                        <button onclick="editarPaciente(${paciente.idPaciente})" class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600">Editar</button>
+                        <button onclick="eliminarPaciente(${paciente.idPaciente})" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">Eliminar</button>
+                    </td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching pacientes:', error));
+        }
+
+        // Función para agregar un nuevo paciente
+        document.getElementById('pacienteForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const paciente = {
+                nombreCompleto: document.getElementById('nombrePaciente').value,
+                correoElectronico: document.getElementById('correoPaciente').value,
+                telefono: document.getElementById('telefonoPaciente').value,
+                direccion: document.getElementById('direccionPaciente').value,
+                fechaNacimiento: document.getElementById('fechaNacimientoPaciente').value,
+                numeroDocumento: document.getElementById('numeroDocumento').value,
+                sexo: document.getElementById('sexoPaciente').value,
+                tipoDocumento: document.getElementById('tipoDocumento').value
+            };
+            fetch(`${API_URL}/pacientes`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paciente)
+            })
+                .then(response => response.json())
+                .then(() => {
+                    alert('Paciente agregado correctamente');
+                    fetchPacientes();  // Actualizar lista de pacientes
+                    document.getElementById('pacienteForm').reset();  // Limpiar el formulario
+                })
+                .catch(error => console.error('Error al agregar paciente:', error));
+        });
+
+        // Función para editar un paciente
+        function editarPaciente(idPaciente) {
+            fetch(`${API_URL}/pacientes/${idPaciente}`)
+                .then(response => response.json())
+                .then(paciente => {
+                    // Asegurándonos de que todos los campos se rellenen con los datos del paciente
+                    document.getElementById('nombrePaciente').value = paciente.nombreCompleto || '';
+                    document.getElementById('correoPaciente').value = paciente.correoElectronico || '';
+                    document.getElementById('telefonoPaciente').value = paciente.telefono || '';
+                    document.getElementById('direccionPaciente').value = paciente.direccion || '';
+                    document.getElementById('fechaNacimientoPaciente').value = paciente.fechaNacimiento || '';
+                    document.getElementById('numeroDocumento').value = paciente.numeroDocumento || '';
+                    document.getElementById('sexoPaciente').value = paciente.sexo || ''; // Rellenar con "Masculino", "Femenino", "Otro"
+                    document.getElementById('tipoDocumento').value = paciente.tipoDocumento || ''; // Si no hay tipo, dejar vacío
+
+                    // Cambiar la acción del formulario para actualizar
+                    const form = document.getElementById('pacienteForm');
+                    form.onsubmit = function (event) {
+                        event.preventDefault();
+                        const pacienteActualizado = {
+                            nombreCompleto: document.getElementById('nombrePaciente').value,
+                            correoElectronico: document.getElementById('correoPaciente').value,
+                            telefono: document.getElementById('telefonoPaciente').value,
+                            direccion: document.getElementById('direccionPaciente').value,
+                            fechaNacimiento: document.getElementById('fechaNacimientoPaciente').value,
+                            numeroDocumento: document.getElementById('numeroDocumento').value,
+                            sexo: document.getElementById('sexoPaciente').value,
+                            tipoDocumento: document.getElementById('tipoDocumento').value
+                        };
+
+                        fetch(`${API_URL}/pacientes/${idPaciente}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(pacienteActualizado)
+                        })
+                            .then(response => response.json())
+                            .then(() => {
+                                alert('Paciente actualizado correctamente');
+                                fetchPacientes();  // Actualizar lista de pacientes
+                                form.reset();  // Limpiar el formulario
+                                form.onsubmit = null;  // Resetear la acción del formulario
+                            })
+                            .catch(error => console.error('Error al actualizar paciente:', error));
+                    };
+                })
+                .catch(error => console.error('Error fetching paciente:', error));
+        }
+
+
+        // Función para eliminar un paciente
+        function eliminarPaciente(idPaciente) {
+            fetch(`${API_URL}/pacientes/${idPaciente}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Paciente eliminado');
+                        fetchPacientes();  // Actualizar lista de pacientes
+                    } else {
+                        alert('Error al eliminar paciente');
+                    }
+                })
+                .catch(error => console.error('Error al eliminar paciente:', error));
+        }
+
+        // ===============================
+        // FUNCIONES DE INICIALIZACIÓN
+        // ===============================
+
+        // Llamadas iniciales para cargar los datos de médicos y pacientes
+        fetchMedicos();
+        fetchPacientes();
+
+    </script>
+</body>
+
+</html>
