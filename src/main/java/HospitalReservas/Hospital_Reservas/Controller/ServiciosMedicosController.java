@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/servicios-medicos")
+@RequestMapping("/api/v1/servicios")
+
 public class ServiciosMedicosController {
 
     @Autowired

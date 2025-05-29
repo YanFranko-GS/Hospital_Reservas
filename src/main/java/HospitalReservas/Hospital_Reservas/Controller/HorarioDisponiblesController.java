@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/horarios")
+@RequestMapping("/api/v1/horarios")
+
 public class HorarioDisponiblesController {
 
     @Autowired

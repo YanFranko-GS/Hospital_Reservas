@@ -1,5 +1,9 @@
 package HospitalReservas.Hospital_Reservas.Modal;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "citas")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCita")
 public class Citas {
 
     @Id
@@ -31,27 +36,29 @@ public class Citas {
     private String observaciones;
 
     // Relación con Usuario (un usuario puede tener muchas citas)
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)  // Clave foránea en la tabla Citas
-    private Usuarios usuario;
+
 
     // Relación con HorariosDisponibles (un horario puede estar asociado a muchas citas)
     @ManyToOne
     @JoinColumn(name = "id_horario", nullable = false)  // Clave foránea en la tabla Citas
+    
     private HorarioDisponibles horario;
 
     // Relación con Medicos (un medico puede estar asociado a muchas citas)
     @ManyToOne
     @JoinColumn(name = "id_medico", nullable = false)  // Clave foránea en la tabla Citas
+    
     private Medicos medico;
 
     // Relación con Pacientes (un paciente puede tener muchas citas)
     @ManyToOne
     @JoinColumn(name = "id_paciente", nullable = false)  // Clave foránea en la tabla Citas
+    
     private Pacientes paciente; // Relación con la clase Pacientes
     
     // Relación con ServiciosMedicos (un servicio médico puede estar asociado a muchas citas)
     @ManyToOne
     @JoinColumn(name = "id_servicio", nullable = false)  // Clave foránea en la tabla Citas
+    
     private ServiciosMedicos servicioMedico; // Relación con la clase ServiciosMedicos
 }

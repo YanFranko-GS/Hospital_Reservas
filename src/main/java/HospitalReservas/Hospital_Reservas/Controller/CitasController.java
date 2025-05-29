@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/citas")
+@RequestMapping("/api/v1/citas")
 public class CitasController {
 
     @Autowired

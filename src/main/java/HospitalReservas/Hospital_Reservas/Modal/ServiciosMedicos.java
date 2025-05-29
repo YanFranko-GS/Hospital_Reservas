@@ -13,12 +13,18 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "servicios_medicos")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idServicio")
+
 public class ServiciosMedicos {
 
     @Id
@@ -33,9 +39,11 @@ public class ServiciosMedicos {
 
     // Relación con HorariosDisponibles (un servicio puede estar disponible en varios horarios)
     @OneToMany(mappedBy = "servicioMedico")
+    @JsonIgnore
     private List<HorarioDisponibles> horariosDisponibles;  // Relación inversa con HorariosDisponibles
 
     // Relación con Citas (un servicio puede estar asociado a varias citas)
     @OneToMany(mappedBy = "servicioMedico")
+    @JsonIgnore 
     private List<Citas> citas;  // Relación inversa con Citas
 }
