@@ -14,12 +14,17 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "pacientes")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idHorario")
 public class Pacientes {
 
     @Id
@@ -37,5 +42,6 @@ public class Pacientes {
 
     // Relación con Citas (un paciente puede tener muchas citas)
     @OneToMany(mappedBy = "paciente")
+    @JsonIgnore  
     private List<Citas> citas;  // Relación inversa con Citas
 }
