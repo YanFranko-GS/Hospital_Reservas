@@ -36,10 +36,6 @@ public class Citas {
     private String observaciones;
 
     // Relación con Usuario (un usuario puede tener muchas citas)
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)  // Clave foránea en la tabla Citas
-    
-    private Usuarios usuario;
 
     // Relación con HorariosDisponibles (un horario puede estar asociado a muchas citas)
     @ManyToOne
