@@ -33,16 +33,19 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/api/auth/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/v1/citas/mis-citas").hasRole("PACIENTE") // Solo ve sus citas
-            .requestMatchers(HttpMethod.POST, "/api/v1/citas").hasRole("PACIENTE") // Puede reservar cita
-            .requestMatchers(HttpMethod.GET, "/api/v1/horarios").hasRole("PACIENTE") // Ve horarios disponibles
-            .requestMatchers(HttpMethod.GET, "/api/v1/medicos").hasRole("PACIENTE") // Puede consultar médicos
-            .requestMatchers(HttpMethod.GET, "/api/v1/notificaciones").hasRole("PACIENTE") // Ve sus notificaciones
-            .requestMatchers("/api/v1/citas/**").hasRole("ADMIN") // CRUD solo para admin
-            .requestMatchers("/api/v1/historiales/**").hasRole("ADMIN") // Historiales médicos solo admin
-            .requestMatchers("/api/v1/pacientes/**").hasRole("ADMIN") // Gestión de pacientes solo admin
-            .requestMatchers("/api/v1/pagos/**").hasRole("ADMIN") // Manejo de pagos solo admin
-            .requestMatchers("/api/v1/servicios/**").hasRole("ADMIN") // Solo admin modifica servicios
+            //lo que puede hacer el Usuario -> PACIENTE
+            .requestMatchers(HttpMethod.GET, "/api/v1/citas/mis-citas").hasRole("USER") 
+            .requestMatchers(HttpMethod.POST, "/api/v1/citas").hasRole("USER") 
+            .requestMatchers(HttpMethod.GET, "/api/v1/horarios").hasRole("USER") 
+            .requestMatchers(HttpMethod.GET, "/api/v1/medicos").hasRole("USER") 
+            .requestMatchers(HttpMethod.GET, "/api/v1/notificaciones").hasRole("USER") 
+           
+            //admin ps 
+            .requestMatchers("/api/v1/citas/**").hasRole("ADMIN") 
+            .requestMatchers("/api/v1/historiales/**").hasRole("ADMIN") 
+            .requestMatchers("/api/v1/pacientes/**").hasRole("ADMIN") 
+            .requestMatchers("/api/v1/pagos/**").hasRole("ADMIN") 
+            .requestMatchers("/api/v1/servicios/**").hasRole("ADMIN") 
             .requestMatchers("/api/v1/medicos/**").hasRole("ADMIN")
             .requestMatchers("/api/v1/horarios/**").hasRole("ADMIN")
             .requestMatchers("/api/v1/notificaciones/**").hasRole("ADMIN")

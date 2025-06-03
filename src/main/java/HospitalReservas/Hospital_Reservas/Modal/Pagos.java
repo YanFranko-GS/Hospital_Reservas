@@ -33,8 +33,8 @@ public class Pagos {
     private String fechaPago;
     private String estadoPago;
 
-    // Relación con Usuario (un pago pertenece a un único usuario)
+    
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)  // Clave foránea a Usuarios
+    @JoinColumn(name = "id_usuario", nullable = false)  
     private Usuarios usuario;
 }

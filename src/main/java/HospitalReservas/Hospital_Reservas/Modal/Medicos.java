@@ -39,8 +39,8 @@ public class Medicos {
     private String telefono;
     private String correoElectronico;
 
-    // Relación con Citas (un medico puede tener muchas citas)
+    
     @OneToMany(mappedBy = "medico")
     @JsonIgnore 
-    private List<Citas> citas;  // Relación inversa con Citas
+    private List<Citas> citas; 
 }

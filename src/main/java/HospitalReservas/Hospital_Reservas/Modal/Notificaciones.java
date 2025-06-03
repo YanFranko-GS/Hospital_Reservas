@@ -33,8 +33,8 @@ public class Notificaciones {
     private String medioEnvio;
     private String mensaje;
 
-    // Relación con Usuario (una notificación pertenece a un único usuario)
+   
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)  // Clave foránea a Usuarios
+    @JoinColumn(name = "id_usuario", nullable = false)  
     private Usuarios usuario;
 }

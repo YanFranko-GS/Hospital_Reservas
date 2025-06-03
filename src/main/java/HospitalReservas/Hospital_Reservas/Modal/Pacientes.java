@@ -40,8 +40,8 @@ public class Pacientes {
     private String tipoDocumento;
     private String numeroDocumento;
 
-    // Relación con Citas (un paciente puede tener muchas citas)
+    
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore  
-    private List<Citas> citas;  // Relación inversa con Citas
+    private List<Citas> citas; 
 }

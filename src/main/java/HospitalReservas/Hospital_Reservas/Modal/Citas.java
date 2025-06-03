@@ -35,29 +35,29 @@ public class Citas {
     private String estado;
     private String observaciones;
 
-    // Relación con Usuario (un usuario puede tener muchas citas)
+    
 
-    // Relación con HorariosDisponibles (un horario puede estar asociado a muchas citas)
+    
     @ManyToOne
-    @JoinColumn(name = "id_horario", nullable = false)  // Clave foránea en la tabla Citas
+    @JoinColumn(name = "id_horario", nullable = false)  
     
     private HorarioDisponibles horario;
 
-    // Relación con Medicos (un medico puede estar asociado a muchas citas)
+    
     @ManyToOne
-    @JoinColumn(name = "id_medico", nullable = false)  // Clave foránea en la tabla Citas
+    @JoinColumn(name = "id_medico", nullable = false)  
     
     private Medicos medico;
 
-    // Relación con Pacientes (un paciente puede tener muchas citas)
+   
     @ManyToOne
-    @JoinColumn(name = "id_paciente", nullable = false)  // Clave foránea en la tabla Citas
+    @JoinColumn(name = "id_paciente", nullable = false)  
     
-    private Pacientes paciente; // Relación con la clase Pacientes
+    private Pacientes paciente;
     
-    // Relación con ServiciosMedicos (un servicio médico puede estar asociado a muchas citas)
+    
     @ManyToOne
-    @JoinColumn(name = "id_servicio", nullable = false)  // Clave foránea en la tabla Citas
+    @JoinColumn(name = "id_servicio", nullable = false) 
     
-    private ServiciosMedicos servicioMedico; // Relación con la clase ServiciosMedicos
+    private ServiciosMedicos servicioMedico; 
 }
