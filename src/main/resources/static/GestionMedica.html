@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Gestión Médica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            width: 250px;
+            background: #343a40;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background: #495057;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+        }
+        .card {
+            padding: 15px;
+            text-align: center;
+        }
+        .dark-mode {
+            background-color: #212529;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4 class="text-center text-light">Admin Panel</h4>
+        <a href="#"><i class="fa-solid fa-home"></i> Inicio</a>
+        <a href="#"><i class="fa-solid fa-calendar-check"></i> Citas</a>
+        <a href="#"><i class="fa-solid fa-user-md"></i> Médicos</a>
+        <a href="#"><i class="fa-solid fa-users"></i> Pacientes</a>
+        <a href="#"><i class="fa-solid fa-file-medical"></i> Historial</a>
+        <a href="#"><i class="fa-solid fa-credit-card"></i> Pagos</a>
+        <a href="#"><i class="fa-solid fa-bell"></i> Notificaciones</a>
+        <a href="#"><i class="fa-solid fa-envelope"></i> Mensajes</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Dashboard Administrativo</h2>
+        
+        <!-- Estadísticas -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <h5><i class="fa-solid fa-calendar-check"></i> Citas Pendientes</h5>
+                    <p>Hoy tienes 12 citas.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-info text-white">
+                    <h5><i class="fa-solid fa-user-md"></i> Médicos Activos</h5>
+                    <p>Hay 8 médicos disponibles.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-warning text-white">
+                    <h5><i class="fa-solid fa-users"></i> Pacientes Registrados</h5>
+                    <p>Más de 2000 pacientes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <canvas id="chartCitas"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="chartPacientes"></canvas>
+            </div>
+        </div>
+
+        <!-- Tabla de datos -->
+        <div class="card mt-4">
+            <h5><i class="fa-solid fa-file-medical"></i> Últimos Historiales Médicos</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Diagnóstico</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>001</td><td>Juan Pérez</td><td>Hipertensión</td><td>2025-06-02</td></tr>
+                    <tr><td>002</td><td>Ana Gómez</td><td>Diabetes Tipo II</td><td>2025-06-01</td></tr>
+                    <tr><td>003</td><td>Carlos Ruiz</td><td>Alergia Estacional</td><td>2025-06-01</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulario para agregar registros -->
+        <div class="card mt-4">
+            <h5><i class="fa-solid fa-user-plus"></i> Registrar Nuevo Paciente</h5>
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Diagnóstico</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="text-center mt-4 bg-primary text-white p-3">
+        &copy; 2025 Sistema de Gestión Médica - Dashboard Admin
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Gráficos con Chart.js
+        const ctx1 = document.getElementById('chartCitas').getContext('2d');
+        const chartCitas = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+                datasets: [{ label: 'Citas Programadas', data: [12, 15, 8, 10, 6], backgroundColor: 'rgba(0, 123, 255, 0.5)' }]
+            }
+        });
+
+        const ctx2 = document.getElementById('chartPacientes').getContext('2d');
+        const chartPacientes = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+                datasets: [{ label: 'Pacientes Nuevos', data: [50, 65, 80, 90, 120], backgroundColor: 'rgba(40, 167, 69, 0.5)' }]
+            }
+        });
+    </script>
+
+</body>
+</html>
