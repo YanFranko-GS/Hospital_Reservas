@@ -33,13 +33,13 @@ public class HistorialMedicos {
     private String fechaRegistro;
     private String progreso;
 
-    // Relación con Medico (un medico puede tener muchos historiales médicos)
+    
     @ManyToOne
-    @JoinColumn(name = "id_medico", nullable = false)  // Clave foránea a Medicos
+    @JoinColumn(name = "id_medico", nullable = false)  
     private Medicos medico;
 
-    // Relación con Paciente (un paciente puede tener muchos historiales médicos)
+    
     @ManyToOne
-    @JoinColumn(name = "id_paciente", nullable = false)  // Clave foránea a Pacientes
+    @JoinColumn(name = "id_paciente", nullable = false) 
     private Pacientes paciente;
 }
