@@ -30,21 +30,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, 
                                     HttpServletResponse response, 
                                     FilterChain filterChain) throws ServletException, IOException {
-        
+
+        String path = request.getRequestURI();
+        if (
+            path.equals("/") ||
+            path.equals("/index.html") ||
+            path.equals("/login.html") ||
+            path.equals("/register.html") ||
+            path.equals("/paciente.html") ||
+            path.equals("/admin.html") ||
+            path.startsWith("/css/") ||
+            path.startsWith("/js/") ||
+            path.startsWith("/images/") ||
+            path.equals("/favicon.ico") ||
+            path.startsWith("/api/auth/")
+        ) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String token = getJWTFromRequest(request);
-        
+
         if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
             String username = jwtTokenProvider.getUsernameFromJWT(token);
-            
+
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authenticationToken = 
                 new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            
+
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
-        
+
         filterChain.doFilter(request, response);
     }
 

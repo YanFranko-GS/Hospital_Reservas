@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Hospital Reservas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login - Hospital Reservas</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <style>
         body {
             background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
             min-height: 100vh;
@@ -39,39 +41,57 @@
             transform: scale(0.97);
         }
     </style>
-</head>
-<body class="flex items-center justify-center min-h-screen">
-    <div class="card bg-white rounded-2xl shadow-lg p-10 w-full max-w-md animate__animated animate__fadeInDown">
-        <div class="flex flex-col items-center mb-6">
-            <div class="bg-blue-100 rounded-full p-4 mb-2 animate__animated animate__bounceIn">
-                <i class="fa-solid fa-hospital-user fa-2x text-blue-600"></i>
+    </head>
+    <body class="flex items-center justify-center min-h-screen">
+        <div
+            class="card bg-white rounded-2xl shadow-lg p-10 w-full max-w-md animate__animated animate__fadeInDown">
+            <div class="flex flex-col items-center mb-6">
+                <div
+                    class="bg-blue-100 rounded-full p-4 mb-2 animate__animated animate__bounceIn">
+                    <i
+                        class="fa-solid fa-hospital-user fa-2x text-blue-600"></i>
+                </div>
+                <h2
+                    class="text-3xl font-extrabold text-gray-800 mb-1 tracking-tight animate__animated animate__fadeIn">Hospital
+                    Reservas</h2>
+                <span
+                    class="text-blue-500 font-semibold animate__animated animate__fadeIn animate__delay-1s">Bienvenido,
+                    inicia sesión</span>
             </div>
-            <h2 class="text-3xl font-extrabold text-gray-800 mb-1 tracking-tight animate__animated animate__fadeIn">Hospital Reservas</h2>
-            <span class="text-blue-500 font-semibold animate__animated animate__fadeIn animate__delay-1s">Bienvenido, inicia sesión</span>
-        </div>
-        <form id="loginForm" class="space-y-5 animate__animated animate__fadeInUp">
-            <div class="input-group">
-                <i class="fa-solid fa-user input-icon"></i>
-                <input type="text" id="loginUsuario" required placeholder="Usuario o correo"
-                    class="input-field w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition" />
-            </div>
-            <div class="input-group">
-                <i class="fa-solid fa-lock input-icon"></i>
-                <input type="password" id="loginPassword" required placeholder="Contraseña"
-                    class="input-field w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition" />
-            </div>
-            <button type="submit"
-                class="btn-primary w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center space-x-2 shadow-md">
-                <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                <span>Ingresar</span>
+            <form id="loginForm"
+                class="space-y-5 animate__animated animate__fadeInUp">
+                <div class="input-group">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="loginUsuario" required
+                        placeholder="Usuario o correo"
+                        class="input-field w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition" />
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="loginPassword" required
+                        placeholder="Contraseña"
+                        class="input-field w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition" />
+                </div>
+                <button type="submit"
+                    class="btn-primary w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center space-x-2 shadow-md">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    <span>Ingresar</span>
+                </button>
+            </form>
+            <button onclick="window.location.href='register.html'"
+                class="w-full mt-4 bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-2 rounded-lg hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 flex items-center justify-center space-x-2 shadow">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Registrarse</span>
             </button>
-        </form>
-        <div id="loginMsg" class="mt-4 text-center text-sm animate__animated" style="display:none"></div>
-        <div class="mt-8 text-center text-gray-400 text-xs">
-            <i class="fa-solid fa-shield-heart"></i> Hospital Reservas &copy; 2025
+            <div id="loginMsg"
+                class="mt-4 text-center text-sm animate__animated"
+                style="display:none"></div>
+            <div class="mt-8 text-center text-gray-400 text-xs">
+                <i class="fa-solid fa-shield-heart"></i> Hospital Reservas
+                &copy; 2025
+            </div>
         </div>
-    </div>
-    <script>
+        <script>
         const API_URL = "http://localhost:8080/api";
         function setToken(token) { localStorage.setItem('token', token); }
         function parseJwt(token) {
@@ -130,5 +150,5 @@
             }
         });
     </script>
-</body>
+    </body>
 </html>

@@ -1,5 +1,6 @@
 package HospitalReservas.Hospital_Reservas.Controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,6 @@ import HospitalReservas.Hospital_Reservas.DTO.JwtAuthResponse;
 import HospitalReservas.Hospital_Reservas.DTO.LoginDTO;
 import HospitalReservas.Hospital_Reservas.DTO.RegistroDTO;
 import HospitalReservas.Hospital_Reservas.Service.AuthService;
-import HospitalReservas.Hospital_Reservas.Service.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 
@@ -18,22 +18,21 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         String token = authService.login(loginDTO);
-        
+
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setToken(token);
-        
+
         return ResponseEntity.ok(jwtAuthResponse);
     }
 
-    @PostMapping("/registrar")
+    @PostMapping("/register")
     public ResponseEntity<String> registrar(@RequestBody RegistroDTO registroDTO) {
         String respuesta = authService.registrar(registroDTO);
-        return ResponseEntity.ok(respuesta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
     }
 }
