@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Hospital Reservas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
+            min-height: 100vh;
+        }
+        .card {
+            box-shadow: 0 10px 25px -5px rgba(60, 60, 120, 0.15);
+            animation: fadeInDown 0.8s;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #818cf8;
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-field {
+            padding-left: 2.5rem !important;
+        }
+        .btn-primary {
+            transition: all 0.2s;
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="card bg-white rounded-2xl shadow-lg p-10 w-full max-w-md animate__animated animate__fadeInDown">
+        <div class="flex flex-col items-center mb-6">
+            <div class="bg-blue-100 rounded-full p-4 mb-2 animate__animated animate__bounceIn">
+                <i class="fa-solid fa-hospital-user fa-2x text-blue-600"></i>
+            </div>
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-1 tracking-tight animate__animated animate__fadeIn">Hospital Reservas</h2>
+            <span class="text-blue-500 font-semibold animate__animated animate__fadeIn animate__delay-1s">Bienvenido, inicia sesión</span>
+        </div>
+        <form id="loginForm" class="space-y-5 animate__animated animate__fadeInUp">
+            <div class="input-group">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="loginUsuario" required placeholder="Usuario o correo"
+                    class="input-field w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition" />
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="loginPassword" required placeholder="Contraseña"
+                    class="input-field w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition" />
+            </div>
+            <button type="submit"
+                class="btn-primary w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center space-x-2 shadow-md">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <span>Ingresar</span>
+            </button>
+        </form>
+        <div id="loginMsg" class="mt-4 text-center text-sm animate__animated" style="display:none"></div>
+        <div class="mt-8 text-center text-gray-400 text-xs">
+            <i class="fa-solid fa-shield-heart"></i> Hospital Reservas &copy; 2025
+        </div>
+    </div>
+    <script>
+        const API_URL = "http://localhost:8080/api";
+        function setToken(token) { localStorage.setItem('token', token); }
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) { return null; }
+        }
+        function showMsg(msg, type = "error") {
+            const el = document.getElementById('loginMsg');
+            el.textContent = msg;
+            el.style.display = "block";
+            el.className = "mt-4 text-center text-sm animate__animated animate__shakeX " +
+                (type === "error" ? "text-red-600" : "text-green-600");
+        }
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const usuario = document.getElementById('loginUsuario').value;
+            const contrasena = document.getElementById('loginPassword').value;
+            fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombreUsuario: usuario, contrasena: contrasena })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Credenciales incorrectas');
+                return response.json();
+            })
+            .then(data => {
+                setToken(data.token);
+                const payload = parseJwt(data.token);
+                let role = Array.isArray(payload.roles) ? payload.roles[0] : (payload.role || payload.authorities?.[0]?.authority || 'USER');
+                showMsg("¡Bienvenido!", "success");
+                setTimeout(() => {
+                    if (role === 'ADMIN') {
+                        window.location.href = "admin.html";
+                    } else {
+                        window.location.href = "paciente.html";
+                    }
+                }, 600);
+            })
+            .catch(() => showMsg('Usuario o contraseña incorrectos', "error"));
+        });
+        // Si ya hay token, redirigir automáticamente
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const payload = parseJwt(token);
+                let role = Array.isArray(payload.roles) ? payload.roles[0] : (payload.role || payload.authorities?.[0]?.authority || 'USER');
+                if (role === 'ADMIN') window.location.href = "admin.html";
+                else window.location.href = "paciente.html";
+            }
+        });
+    </script>
+</body>
+</html>
