@@ -32,11 +32,17 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .csrf(csrf -> csrf.disable())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
+
+        /* 
+        ////////////
             .requestMatchers("/", "/index.html", "/login.html", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
             .requestMatchers("/register.html").permitAll()
             .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers("/paciente.html").hasRole("PACIENTE")
             .requestMatchers("/admin.html").hasRole("ADMIN")
+        */
+        ///////////
+            .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/v1/citas/mis-citas").hasRole("PACIENTE")
             .requestMatchers(HttpMethod.POST, "/api/v1/citas").hasRole("PACIENTE")
             .requestMatchers(HttpMethod.GET, "/api/v1/horarios").hasRole("PACIENTE")

@@ -62,19 +62,18 @@ public class Usuarios implements UserDetails {
     @Override
     public Set<GrantedAuthority> getAuthorities() {
     return roles.stream()
-            .map(role -> new SimpleGrantedAuthority(role.getNombre().name())) // Convertir enum a String
+            .map(role -> new SimpleGrantedAuthority(role.getNombre().name())) 
             .collect(Collectors.toSet());
 } 
 
 
 
-    // Relación con Notificaciones (un usuario puede tener muchas notificaciones)
+    
     @OneToMany(mappedBy = "usuario")
-    private List<Notificaciones> notificaciones;  // Relación inversa con Notificaciones
-
-    // Relación con Pagos (un usuario puede tener muchos pagos)
+    private List<Notificaciones> notificaciones;  
+    
     @OneToMany(mappedBy = "usuario")
-    private List<Pagos> pagos;  // Relación inversa con Pagos
+    private List<Pagos> pagos;  
 
 
     @Override

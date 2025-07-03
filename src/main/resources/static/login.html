@@ -118,7 +118,7 @@
             fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nombreUsuario: usuario, contrasena: contrasena })
+                body: JSON.stringify({ nombreOrCorreo: usuario, contrasena: contrasena })
             })
             .then(response => {
                 if (!response.ok) throw new Error('Credenciales incorrectas');

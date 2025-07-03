@@ -37,13 +37,13 @@ public class ServiciosMedicos {
     private String descripcion;
     private String estado;
 
-    // Relación con HorariosDisponibles (un servicio puede estar disponible en varios horarios)
+    
     @OneToMany(mappedBy = "servicioMedico")
     @JsonIgnore
-    private List<HorarioDisponibles> horariosDisponibles;  // Relación inversa con HorariosDisponibles
+    private List<HorarioDisponibles> horariosDisponibles;  
 
-    // Relación con Citas (un servicio puede estar asociado a varias citas)
+    
     @OneToMany(mappedBy = "servicioMedico")
     @JsonIgnore 
-    private List<Citas> citas;  // Relación inversa con Citas
+    private List<Citas> citas;  
 }
