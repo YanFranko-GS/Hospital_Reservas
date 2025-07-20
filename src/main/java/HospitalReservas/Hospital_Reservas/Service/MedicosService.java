@@ -36,6 +36,9 @@ public class MedicosService {
             m.setEspecialidad(actualizado.getEspecialidad());
             m.setNumeroColegiado(actualizado.getNumeroColegiado());
             m.setCorreoElectronico(actualizado.getCorreoElectronico());
+            m.setHorarioLaboral(actualizado.getHorarioLaboral());
+            m.setTelefono(actualizado.getTelefono());
+            m.setConsultorio(actualizado.getConsultorio());
             return medicosRepository.save(m);
         });
     }

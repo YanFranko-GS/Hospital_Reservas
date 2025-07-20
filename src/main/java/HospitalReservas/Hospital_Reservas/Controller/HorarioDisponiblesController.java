@@ -19,27 +19,27 @@ public class HorarioDisponiblesController {
     @Autowired
     private HorarioDisponiblesService horarioDisponiblesService;
 
-    // GET: Listar todos los horarios disponibles
+    
     @GetMapping
     public ResponseEntity<List<HorarioDisponibles>> listarHorariosDisponibles() {
         return ResponseEntity.ok(horarioDisponiblesService.listarHorarioDisponibles());
     }
 
-    // GET: Buscar horario por ID
+    
     @GetMapping("/{id_horario}")
     public ResponseEntity<HorarioDisponibles> obtenerHorarioPorId(@PathVariable("id_horario") Long idHorario) {
         Optional<HorarioDisponibles> horario = horarioDisponiblesService.findByIdHorario(idHorario);
         return horario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // POST: Crear nuevo horario disponible
+   
     @PostMapping
     public ResponseEntity<HorarioDisponibles> crearHorarioDisponible(@RequestBody HorarioDisponibles horario) {
         HorarioDisponibles nuevoHorario = horarioDisponiblesService.saveHorarioDisponible(horario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoHorario);
     }
 
-    // PUT: Actualizar horario existente
+    
     @PutMapping("/{id_horario}")
     public ResponseEntity<HorarioDisponibles> actualizarHorarioDisponible(
             @PathVariable Long id_horario,
@@ -49,7 +49,7 @@ public class HorarioDisponiblesController {
         return horario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // DELETE: Eliminar horario disponible
+    
     @DeleteMapping("/{id_horario}")
     public ResponseEntity<Void> eliminarHorarioDisponible(@PathVariable Long id_horario) {
         if (horarioDisponiblesService.deleteHorarioDisponible(id_horario)) {
@@ -59,7 +59,7 @@ public class HorarioDisponiblesController {
         }
     }
 
-    // GET: Buscar horario por fecha de disponibilidad
+    
     @GetMapping("/buscar/fecha")
     public ResponseEntity<List<HorarioDisponibles>> buscarPorFecha(@RequestParam("fecha") String fechaDisponibilidad) {
         return horarioDisponiblesService.findByFechaDisponibilidad(fechaDisponibilidad)

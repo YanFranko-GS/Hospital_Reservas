@@ -31,23 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response, 
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getRequestURI();
-        if (
-            path.equals("/") ||
-            path.equals("/index.html") ||
-            path.equals("/login.html") ||
-            path.equals("/register.html") ||
-            path.equals("/paciente.html") ||
-            path.equals("/admin.html") ||
-            path.startsWith("/css/") ||
-            path.startsWith("/js/") ||
-            path.startsWith("/images/") ||
-            path.equals("/favicon.ico") ||
-            path.startsWith("/api/auth/")
-        ) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        
 
         String token = getJWTFromRequest(request);
 

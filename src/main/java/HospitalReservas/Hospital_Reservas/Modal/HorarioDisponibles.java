@@ -17,6 +17,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Getter
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @NoArgsConstructor
 @Entity
 @Table(name = "horarios_disponibles")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idHorario")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idHorario")
 public class HorarioDisponibles {
 
     @Id
@@ -37,10 +38,9 @@ public class HorarioDisponibles {
     private String horaFin;
     private String estado;
 
-    
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "id_servicio", nullable = false)  
-    @JsonIgnore 
     private ServiciosMedicos servicioMedico;
 
     

@@ -3,11 +3,13 @@ package HospitalReservas.Hospital_Reservas.Config;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import HospitalReservas.Hospital_Reservas.Modal.Usuarios;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,12 +21,32 @@ import java.security.Key;
 public class JwtTokenProvider {
 
     private static final String SECRET_KEY = "PRdukwOSJ3ZUfLUWyJgMT0WPM58mbidmGzTs7twyuIFOsRkzfqMOBEnwGh3H7dF2xjYIsLCC//kNovCJWgQikg==";
-    
+
+   
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    Map<String, Object> claims = new HashMap<>();
+
+    if (userDetails instanceof Usuarios usuario) {
+        // Agregar nombre de usuario
+        claims.put("nombre", usuario.getUsername());
+
+        // Agregar roles separados por coma
+        String roles = usuario.getRoles().stream()
+                .map(r -> r.getNombre().name())
+                .collect(Collectors.joining(","));
+
+        if (roles.isEmpty()) {
+            roles = "ROLE_USER";
+        }
+
+        claims.put("roles", roles);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    return buildToken(claims, userDetails);
+}
+
+    
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -35,43 +57,41 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
+            Jwts.parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token);
             return !isTokenExpired(token);
         } catch (Exception e) {
             return false;
         }
     }
 
+    
     public String getUsernameFromJWT(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractAllClaims(token).getSubject();
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
+    
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
+    
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+        return extractAllClaims(token).getExpiration().before(new Date());
     }
 }

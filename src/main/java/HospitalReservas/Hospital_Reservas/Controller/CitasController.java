@@ -58,7 +58,7 @@ public class CitasController {
         }
     }
 
-    // GET: Buscar cita por estado
+    
     @GetMapping("/buscar/estado")
     public ResponseEntity<List<Citas>> buscarPorEstado(@RequestParam("estado") String estado) {
         return citasService.findByEstado(estado)
@@ -66,7 +66,7 @@ public class CitasController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET: Buscar cita por fecha y hora
+    
     @GetMapping("/buscar/fecha-hora")
     public ResponseEntity<Citas> buscarPorFechaHora(@RequestParam("fechaHora") String fechaHora) {
         return citasService.findByFechaHora(fechaHora)

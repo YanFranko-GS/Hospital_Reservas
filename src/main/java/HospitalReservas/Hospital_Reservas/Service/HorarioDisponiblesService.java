@@ -36,6 +36,7 @@ public class HorarioDisponiblesService {
             h.setHoraInicio(actualizado.getHoraInicio());
             h.setHoraFin(actualizado.getHoraFin());
             h.setEstado(actualizado.getEstado());
+            h.setServicioMedico(actualizado.getServicioMedico());
             return horariosDisponiblesRepository.save(h);
         });
     }

@@ -45,8 +45,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/v1/citas/mis-citas").hasRole("PACIENTE")
             .requestMatchers(HttpMethod.POST, "/api/v1/citas").hasRole("PACIENTE")
-            .requestMatchers(HttpMethod.GET, "/api/v1/horarios").hasRole("PACIENTE")
-            .requestMatchers(HttpMethod.GET, "/api/v1/medicos").hasRole("PACIENTE")
+            .requestMatchers(HttpMethod.GET, "/api/v1/horarios").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/api/v1/medicos").hasRole("ADMIN") //CORREGIR
             .requestMatchers(HttpMethod.GET, "/api/v1/notificaciones").hasRole("PACIENTE")
             .requestMatchers("/api/v1/citas/**").hasRole("ADMIN")
             .requestMatchers("/api/v1/historiales/**").hasRole("ADMIN")
