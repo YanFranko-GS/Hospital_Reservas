@@ -42,6 +42,5 @@ public class Pacientes {
 
   
     @OneToMany(mappedBy = "paciente")
-    @JsonIgnore  
     private List<Citas> citas;  
 }

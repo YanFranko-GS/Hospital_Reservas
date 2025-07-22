@@ -38,12 +38,11 @@ public class ServiciosMedicos {
     private String descripcion;
     private String estado;
 
-    @JsonBackReference
     @OneToMany(mappedBy = "servicioMedico")
+    @JsonIgnore
     private List<HorarioDisponibles> horariosDisponibles;  
 
     
     @OneToMany(mappedBy = "servicioMedico")
-    @JsonIgnore 
     private List<Citas> citas;  
 }

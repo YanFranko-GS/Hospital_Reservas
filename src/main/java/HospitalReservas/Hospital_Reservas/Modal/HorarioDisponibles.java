@@ -38,7 +38,6 @@ public class HorarioDisponibles {
     private String horaFin;
     private String estado;
 
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "id_servicio", nullable = false)  
     private ServiciosMedicos servicioMedico;
