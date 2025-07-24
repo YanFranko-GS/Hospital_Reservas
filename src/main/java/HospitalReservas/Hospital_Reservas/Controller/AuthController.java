@@ -1,5 +1,8 @@
 package HospitalReservas.Hospital_Reservas.Controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +15,6 @@ import HospitalReservas.Hospital_Reservas.DTO.LoginDTO;
 import HospitalReservas.Hospital_Reservas.DTO.RegistroDTO;
 import HospitalReservas.Hospital_Reservas.Service.AuthService;
 import lombok.RequiredArgsConstructor;
-
 
 @RestController
 @RequestMapping("/api/auth")
@@ -31,8 +33,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registrar(@RequestBody RegistroDTO registroDTO) {
+    public ResponseEntity<Map<String, String>> registrar(@RequestBody RegistroDTO registroDTO) {
         String respuesta = authService.registrar(registroDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", respuesta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

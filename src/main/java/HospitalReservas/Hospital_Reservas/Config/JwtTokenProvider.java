@@ -28,7 +28,7 @@ public class JwtTokenProvider {
 
     if (userDetails instanceof Usuarios usuario) {
         // Agregar nombre de usuario
-        claims.put("nombre", usuario.getUsername());
+        claims.put("nombreUsuario", usuario.getUsername());
 
         // Agregar roles separados por coma
         String roles = usuario.getRoles().stream()
